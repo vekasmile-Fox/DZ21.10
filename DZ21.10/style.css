@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* ОТСТУП МЕЖДУ БЛОКАМИ УБРАН */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Основной контейнер блока */
+.card-block {
+    display: flex;
+    height: 300px; /* Фиксированная высота блока */
+    width: 100%;
+    background-color: #ffffff;
+    position: relative; /* Для позиционирования общей темной плашки */
+    overflow: hidden; /* Чтобы картинка не выходила за пределы при увеличении */
+    cursor: pointer;
+}
+
+/* Направление элементов для шахматного порядка */
+.card-block.reverse {
+    flex-direction: row-reverse;
+}
+
+/* Каждая половина делит ширину поровну (50%) */
+.card-part {
+    flex: 0 0 50%;
+    width: 50%;
+    position: relative;
+}
+
+/* Левая/текстовая часть */
+.text-part {
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center;     /* Центрирование по вертикали */
+    padding: 20px;
+    text-align: center;
+}
+
+.text-part h2 {
+    font-size: 24px;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+/* Правая/картиночная часть */
+.image-part {
+    overflow: hidden; /* Дополнительная защита границ для картинки */
+}
+
+.image-part img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Картинка заполняет всю область без искажения */
+    transition: transform 1s ease; /* Плавное увеличение за 1 секунду */
+    display: block;
+}
+
+/* Общая полупрозрачная черная плашка поверх всего блока */
+.card-block::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Черный цвет с непрозрачностью 50% */
+    opacity: 0; /* Изначально полностью невидима */
+    transition: opacity 0.3s ease; /* Появление за 0.3 секунды */
+    pointer-events: none; /* Пропускает клики мыши сквозь себя */
+    z-index: 2;
+}
+
+/* --- Эффекты при наведении (Hover) --- */
+
+/* Появление темной плашки на всем блоке за 0.3 сек */
+.card-block:hover::after {
+    opacity: 1;
+}
+
+/* Плавное увеличение картинки за 1 сек внутри своей части */
+.card-block:hover .image-part img {
+    transform: scale(1.15); /* Увеличение на 15% */
+}
